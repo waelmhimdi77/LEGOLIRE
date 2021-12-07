@@ -1,15 +1,29 @@
+#include "BluetoothSerial.h"
+
+BluetoothSerial SerialBT;
+
+String MACadd = "FC:A8:9A:00:81:F8";
+uint8_t address[6]  = {0xFC, 0xA8, 0x9A, 0x00, 0x81, 0xF8};
+uint8_t address2[6] = {0xFC, 0xA8, 0x9A, 0x00, 0x3F, 0x7B};
+//uint8_t address[6]  = {0x00, 0x1D, 0xA5, 0x02, 0xC3, 0x22};
+String name = "HC-05";
+char *pin = "1234"; //<- standard pin would be provided by default
+bool connected;
+bool connected2;
+String envoi ="";
+boolean appui = false;
 #include <MFRC522.h> //library responsible for communicating with the module RFID-RC522
 #include <SPI.h> //library responsible for communicating of SPI bus
 #define NR_OF_READERS   2
 #define SS_1_PIN        21         // Configurable, take a unused pin, only HIGH/LOW required, must be different to SS 2
 #define SS_2_PIN        17 
-#define BUTTON       4 
+#define BUTTON       15 
 byte ssPins[] = {SS_1_PIN, SS_2_PIN};   
 #define SS_PIN    21
 #define RST_PIN   22
 #define SIZE_BUFFER     18
 #define MAX_SIZE_BLOCK  16
-boolean PRESS_BUTTON = false;
+
 //used in authentication
 MFRC522::MIFARE_Key key;
 //authentication return status code
@@ -25,11 +39,7 @@ String correct[2]={"che", "val"};
 String syllables[] = {"cha","cal", "che","val", "leur"};
 String valeur_lu[NR_OF_READERS];
  boolean response[2];
- void IRAM_ATTR isr(){
-         Serial.println("PUSH");
-         PRESS_BUTTON = true;
-         delay(500);
-}
+ 
 
 #include <WiFi.h>
 #include <PubSubClient.h>
@@ -43,20 +53,21 @@ long lastMsg = 0;
 char msg[50];
 void setup() 
 {
-  Serial.begin(9600);
-  WiFi.begin(ssid, password);
+
+  SerialBT.begin("ESP32test", true); 
+  Serial.begin(115200);
+ /* WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.println("Connecting to WiFi..");
-  }
-  Serial.println("Connected to the WiFi network");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-  client.setServer(mqtt_server, 1883);
-  client.setCallback(callback);
+  }*/
+ // Serial.println("Connected to the WiFi network");
+  //Serial.println("IP address: ");
+  //Serial.println(WiFi.localIP());
+ // client.setServer(mqtt_server, 1883);
+ // client.setCallback(callback);
   
   pinMode(BUTTON, INPUT_PULLUP);
-  attachInterrupt(BUTTON, isr, FALLING);
   
   SPI.begin(); // Init SPI bus
  user1();
@@ -125,10 +136,10 @@ void callback(char* topic, byte* message, unsigned int length) {
   }*/
  // client.loop();
   
-  if(PRESS_BUTTON){
+ /** if(PRESS_BUTTON){
     Serial.println("read");
     PRESS_BUTTON = false;
-  }
+  }*/
   if(Serial.available()){
     char lu = Serial.read();
     switch(lu){
@@ -298,9 +309,13 @@ void user2(){
     }
     Serial.println(String(i+1)+ " -------------------->" + mo);
   }
+ Serial.println(" **************************************************************************");
+Serial.println(" COMMENCEZ LA PARTIE");
 
 int h=0;
+envoi_vers_cube(liste_mot[0]);
   while(h <nbre_mot){
+     Serial.println(" retrouvez le mot -------------------->" +String(h+1));
     for(int i=0; i<2; i++){
        correct[i] ="";
     }
@@ -314,15 +329,10 @@ int h=0;
         n++;
       }
     }
-
-    while(!Serial.available()){} 
     for(int j=0; j<2; j++){
       Serial.println(correct[j]);
     }
-    
-    char lu = Serial.read();
-    switch(lu){
-      case '0':
+    while(!PRESSED_BUTTON()){}
         readd();
         get_WORD(strs,valeur_lu, 2);
         Serial.println("");
@@ -339,15 +349,59 @@ int h=0;
         }
         if((response[0] == response[1]) && response[0]==1){
           h++; 
+          envoi_vers_cube(liste_mot[h]);
         }
-        break;
-      default:
-        break;
-    }
-  }
+    } 
+  }  
+
+void envoi_vers_cube(String mots){
+  String syllabes[2] = {"",""};
+      int nb = 0;
+      for(int i=0; i<mots.length(); i++){
+        if(mots[i] == ' '){
+          nb++;
+        } else{
+          syllabes[nb]+= mots[i];
+        }    
+      }
+      char message1[syllabes[0].length()+1];
+      syllabes[0].toCharArray(message1, (syllabes[0].length()+1));
+      char message2[syllabes[1].length()+1];
+      syllabes[1].toCharArray(message2, (syllabes[1].length()+1));
+       delay(500);
+      connected = SerialBT.connect(address2);
+      if(connected) {
+        Serial.println("Connected  1 Succesfully!");
+        SerialBT.print( message1);
+         if (SerialBT.disconnect()) {
+          Serial.println("Disconnected  1 Succesfully!");
+         //connected = !connected;
+        } 
+      }
+
+      delay(1000);
+      connected = SerialBT.connect(address);
+      if(connected) {
+        Serial.println("Connected  2 Succesfully!");
+        SerialBT.print( message2);
+         if (SerialBT.disconnect()) {
+            Serial.println("Disconnected  2 Succesfully!");
+            //connected = !connected;
+        }
+      }  
 }
 
+boolean PRESSED_BUTTON(){
+  boolean sortie= false;
+   if(!(digitalRead(BUTTON)) && (appui==false)){
+    appui=true;
+    sortie = true;
+  }
+  if(digitalRead(BUTTON)){
+    appui = false;
+    delay(200);
+  }
 
-
-
+  return sortie;
+}
 
