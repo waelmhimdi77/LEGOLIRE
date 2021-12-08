@@ -2,8 +2,8 @@
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
 
-const char *ssid = "Nom du réseau";
-const char *password = "Mot de passe";
+const char *ssid = "myhuawei";
+const char *password = "koffi123";
 
 const int led = 2;
 const int capteurLuminosite = 34;
