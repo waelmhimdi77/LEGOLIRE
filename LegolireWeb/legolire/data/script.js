@@ -78,6 +78,7 @@ function onButton() {
 function offButton() {
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", "off", true);
+  xhttp.ope
   xhttp.send();
 }
 
