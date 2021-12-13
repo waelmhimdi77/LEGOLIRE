@@ -837,6 +837,7 @@ setInterval(function getData() {
                 },
               ]
             );
+
             return DualListbox;
           })();
           /* harmony default export */ __webpack_exports__["default"] =

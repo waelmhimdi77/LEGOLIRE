@@ -13,12 +13,12 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/themes/prism.min.css"
       rel="stylesheet"
     />
-    <link href="dual-listbox.css" rel="stylesheet" />
+    <link href="w3.css" rel="stylesheet" />
   </head>
   <body class="w3-animate-opacity">
     <div class="header w3-top">
       <a href="index.html" class="logo"
-        ><img src="Logo_LegoLire.PNG" class="u-logo-image u-logo-image-1"
+        ><img src="logo.png" class="u-logo-image u-logo-image-1"
       /></a>
       <div class="header-right">
         <a class="active" href="#accueil">Accueil</a>
@@ -28,23 +28,21 @@
     </div>
 
     <div class="bodysection">
-      <div class="container" id="accueil">
-        <img src="kids2.jpg" alt="Norway" style="width: 100%" />
+      <div class="contain" id="accueil">
+        <img src="kids.jpg" alt="Norway" style="width: 100%" />
         <div class="text-block">
-          <h4>LEGOLIRE</h4>
-          <p>Apprendre à lire autrement, apprendre à legolire</p>
+          <h2>Apprendre à lire autrement, <br />apprendre à LEGOLIRE</h2>
         </div>
       </div>
 
-
-      <div class="w3-margin w3-center w3-card w3-padding-24" id="exo">
+      <div class="w3-margin w3-card w3-padding-24" id="exo">
         <section class="section">
           <div class="container">
-            <h1 class="subtitle">
+            <h1>
               Choix des mots à LEGOLIRE
               <span class="source" data-source="dlb2"></span>
             </h1>
-    
+
             <pre
               class="dlb2"
             ><code class="language-html">&lt;select class=&quot;select2&quot; multiple&gt;
@@ -80,16 +78,15 @@
         dlb2.addEventListener('removed', function(event){
             console.log(event);
         });
-        console.log(dlb2);
     &lt;/script&gt;</code></pre>
-    
+
             <div class="selected-element">
               <p>Mot sélectionné:</p>
               <ul class="changed-element">
                 <li>Nothing yet</li>
               </ul>
             </div>
-    
+
             <select class="select2" multiple>
               <option value="1">Cheval</option>
               <option value="2">Vélo</option>
@@ -107,10 +104,46 @@
               <option value="14">Mouton</option>
             </select>
           </div>
+
+          <div class="valid">
+            <button
+              onclick="sendData()"
+              class="
+                w3-button
+                w3-margin
+                w3-center
+                w3-green
+                w3-xlarge
+                w3-ripple
+                w3-wide
+              "
+              id="sb"
+              style="width: 40%"
+            >
+              VALIDER
+            </button>
+          </div>
         </section>
       </div>
 
       <div class="w3-margin w3-center w3-card w3-padding-24" id="nous">
+        <img src="solution.jpg" alt="conception" />
+        <p class="w3-xxlarge">
+          <em
+            ><span
+              >Nous sommes des élèves ingénieurs en Conception d'Objets
+              Communicants (TAF CoOC) à IMT Atlantique.<br />
+              Legolire est une solution qui vise à faciliter l'apprentissage de
+              la lecture des élèves du CP. Notre solution est un pack de cubes
+              afficheurs de syllabes, d'une base électronique qui sert à valider
+              les mots formés à l'aide des cubes et d'une interface web pour
+              l'affichage des images illustrant les mots.
+            </span></em
+          >
+        </p>
+      </div>
+
+      <div class="w3-margin w3-center w3-card w3-padding-24">
         <h3 class="w3-padding">Niveau de luminosité</h3>
         <p class="w3-xxlarge"><span id="valeurLuminosite">0</span></p>
       </div>
@@ -135,7 +168,6 @@
       </div>
     </div>
 
-
     <footer
       class="u-align-center u-clearfix u-footer u-grey-80 u-footer"
       id="sec-b4d9"
@@ -152,8 +184,9 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
     <script src="jquery.scrollTo-1.4.2/jquery.scrollTo-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/prism.min.js"></script>
-    <script src="dual-listbox.js"></script>
+    <script src="script.js"></script>
     <script>
+      var words = ["maison"];
       var dlb2 = new DualListbox(".select2", {
         availableTitle: "Mots disponibles",
         selectedTitle: "Mots sélectionnés",
@@ -166,14 +199,32 @@
       dlb2.addEventListener("added", function (event) {
         document.querySelector(".changed-element").innerHTML =
           event.addedElement.outerHTML;
-          console.log(dlb2);
+        console.log(dlb2);
+        const res = Array.from(
+          document.querySelectorAll(".dual-listbox__item--selected")
+        ).map((e) => ({
+          dataId: e.dataset.id,
+          innerHTML: e.innerHTML,
+        }));
+
+        // Les mots sélectionnés sont ajoutés à la liste
+        words.push(res);
+        console.log(words);
+
+        // Envoi de la liste des mots sélectionnés vers l'ESP32
       });
       dlb2.addEventListener("removed", function (event) {
         document.querySelector(".changed-element").innerHTML =
           event.removedElement.outerHTML;
+        console.log(dlb2);
       });
+      console.log(words);
 
-     
+      function sendData() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "save", true);
+        xhttp.send(words);
+      }
 
       var sources = document.querySelectorAll(".source");
       for (var i = 0; i < sources.length; i++) {

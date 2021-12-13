@@ -96,9 +96,9 @@ html {
   .text-block {
     position: absolute;
     bottom: 20px;
-    right: 20px;
-    background-color: black;
-    color: white;
+    background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
+    background: rgba(204, 204, 204, 0.5);
+    color: black;
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -231,6 +231,8 @@ html {
   section {
     display: block;
   }
+
+
   summary {
     display: list-item;
   }
@@ -1885,8 +1887,6 @@ html {
       padding-right: 0;
       white-space: nowrap;
   }
-  
-
 
 
   
@@ -1901,7 +1901,7 @@ html {
   flex-wrap: wrap;
 }
 .dual-listbox .dual-listbox__search {
-  border: 1px solid #ddd;
+  border: 3px solid rgb(50, 16, 204);
   padding: 10px;
   width: 100%;
 }
@@ -1921,14 +1921,14 @@ html {
   margin: 0 10px;
 }
 .dual-listbox .dual-listbox__button {
-  background-color: #eee;
+  background-color: rgba(25, 38, 97, 0.7);
   border: 0;
   color: #fff;
   margin-bottom: 5px;
   padding: 10px;
 }
 .dual-listbox .dual-listbox__button:hover {
-  background-color: #ddd;
+  background-color: rgb(93, 37, 224);
 }
 .dual-listbox .dual-listbox__title {
   -webkit-margin-before: 1rem;
@@ -1952,5 +1952,5 @@ html {
   -ms-user-select: none;
 }
 .dual-listbox .dual-listbox__item.dual-listbox__item--selected {
-  background-color: rgba(8, 157, 227, 0.7);
+  background-color: rgba(44, 82, 252, 0.7);
 }

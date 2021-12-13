@@ -4,7 +4,7 @@
 
 const char *ssid = "myhuawei";
 const char *password = "koffi123";
-
+String recus;
 const int led = 2;
 const int capteurLuminosite = 34;
 
@@ -57,19 +57,58 @@ void setup()
   //----------------------------------------------------SERVER
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
   {
+    int paramsNr = request->params();
+    Serial.println(paramsNr);
+    for(int i=0;i<paramsNr;i++){
+        AsyncWebParameter* p = request->getParam(i);
+        Serial.print("Param name: ");
+        Serial.println(p->name());
+        Serial.print("Param value: ");
+        Serial.println(p->value());
+        Serial.println("------");
+    }
     request->send(SPIFFS, "/index.html", "text/html");
   });
-
+  
   server.on("/w3.css", HTTP_GET, [](AsyncWebServerRequest *request)
   {
     request->send(SPIFFS, "/w3.css", "text/css");
   });
-
+  server.on("/logo.png", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
+    request->send(SPIFFS, "/logo.png");
+  });
+  server.on("/kids.jpg", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
+    request->send(SPIFFS, "/kids.jpg");
+  });
+  server.on("/solution.jpg", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
+    request->send(SPIFFS, "/solution.jpg");
+  });
+  server.on("/vache.png", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
+    request->send(SPIFFS, "/vache.png");
+  });
+  server.on("/chacal.png", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
+    request->send(SPIFFS, "/chacal.png");
+  });
   server.on("/script.js", HTTP_GET, [](AsyncWebServerRequest *request)
   {
     request->send(SPIFFS, "/script.js", "text/javascript");
   });
 
+/*
+* server.on("/select2", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
+    request->send(200, "text/plain", luminosite);
+  });
+* server.on("/save", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
+    request->send(200);
+  });
+*/
   server.on("/lireLuminosite", HTTP_GET, [](AsyncWebServerRequest *request)
   {
     int val = analogRead(capteurLuminosite);
@@ -77,12 +116,27 @@ void setup()
     request->send(200, "text/plain", luminosite);
   });
 
-  server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request)
+  server.on("/save", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
+    Serial.println("Envoi de la liste de mots");
+    int paramsNr = request->params();
+    Serial.println(paramsNr);
+    for(int i=0;i<paramsNr;i++){
+        AsyncWebParameter* p = request->getParam(i);
+        Serial.print("Param name: ");
+        Serial.println(p->name());
+        Serial.print("Param value: ");
+        Serial.println(p->value());
+        Serial.println("------");
+    }
+    request->send(200, "text/plain", "OK");
+  });
+
+ server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request)
   {
     digitalWrite(led, HIGH);
     request->send(200);
   });
-
   server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request)
   {
     digitalWrite(led, LOW);
