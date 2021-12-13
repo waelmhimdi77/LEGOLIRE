@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
+//#include "http_server.h"
+#include "ArduinoJson.h"
 
 const char *ssid = "myhuawei";
 const char *password = "koffi123";
@@ -116,7 +118,28 @@ void setup()
     request->send(200, "text/plain", luminosite);
   });
 
-  server.on("/save", HTTP_GET, [](AsyncWebServerRequest *request)
+  server.on("/save",
+        HTTP_POST,
+        [](AsyncWebServerRequest * request){},
+        NULL,
+        [](AsyncWebServerRequest * request, uint8_t *data, size_t len,
+        size_t index, size_t total) {
+            // Here goes the code to manage the post request
+            // The data is received on 'data' variable
+            // Parse data
+            Serial.println("POST RECEIVED"); // Just for debug
+            StaticJsonBuffer<50> JSONBuffer; // create a buffer that fits for you
+            JsonObject& parsed = JSONBuffer.parseObject(data); //Parse message
+            const char* received_data = parsed["words"]; //Get data
+            /*for (size_t i = 0; i < (size_t)received_data.size(); i++) {
+                Serial.write(received_data[i]);
+              }*/
+         
+            Serial.println(received_data);
+            request->send(200);
+    });
+
+  /*server.on("/save", HTTP_GET, [](AsyncWebServerRequest *request)
   {
     Serial.println("Envoi de la liste de mots");
     int paramsNr = request->params();
@@ -130,7 +153,7 @@ void setup()
         Serial.println("------");
     }
     request->send(200, "text/plain", "OK");
-  });
+  });*/
 
  server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request)
   {

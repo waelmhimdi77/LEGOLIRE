@@ -67,9 +67,9 @@
           availableTitle:'Mots disponibles',
           selectedTitle: 'Mots sélectionnés',
           addButtonText: 'ajouter',
-          removeButtonText: 'rétirer',
+          removeButtonText: 'retirer',
           addAllButtonText: 'tout ajouter',
-          removeAllButtonText: 'tout rétirer',
+          removeAllButtonText: 'tout retirer',
           searchPlaceholder: 'chercher les mots'
         });
         dlb2.addEventListener('added', function(event){
@@ -120,7 +120,7 @@
               id="sb"
               style="width: 40%"
             >
-              VALIDER
+              LANCER L'EXERCICE
             </button>
           </div>
         </section>
@@ -186,44 +186,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/prism.min.js"></script>
     <script src="script.js"></script>
     <script>
-      var words = ["maison"];
+      var words = [];
+      const res2 = [];
       var dlb2 = new DualListbox(".select2", {
         availableTitle: "Mots disponibles",
         selectedTitle: "Mots sélectionnés",
         addButtonText: "ajouter",
-        removeButtonText: "rétirer",
+        removeButtonText: "retirer",
         addAllButtonText: "tout ajouter",
-        removeAllButtonText: "tout rétirer",
+        removeAllButtonText: "tout retirer",
         searchPlaceholder: "chercher les mots",
       });
       dlb2.addEventListener("added", function (event) {
         document.querySelector(".changed-element").innerHTML =
           event.addedElement.outerHTML;
         console.log(dlb2);
-        const res = Array.from(
+        
+        const w = document.querySelectorAll(".dual-listbox__item--selected");
+        console.log(w);
+        
+        w.forEach(e => {
+          res2.push(e.innerHTML);
+        });
+        console.log(res2);
+        /*const res = Array.from(
           document.querySelectorAll(".dual-listbox__item--selected")
         ).map((e) => ({
-          dataId: e.dataset.id,
-          innerHTML: e.innerHTML,
+          
+          word : e.innerHTML,
         }));
+        console.log("élément sélectionné : ", res);*/
 
         // Les mots sélectionnés sont ajoutés à la liste
-        words.push(res);
-        console.log(words);
-
-        // Envoi de la liste des mots sélectionnés vers l'ESP32
+        words=res2;
+        //console.log("words :", words[0]);
       });
       dlb2.addEventListener("removed", function (event) {
         document.querySelector(".changed-element").innerHTML =
           event.removedElement.outerHTML;
         console.log(dlb2);
       });
-      console.log(words);
 
       function sendData() {
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "save", true);
-        xhttp.send(words);
+        xhttp.open("POST", "/save", true);
+        /*msg='{"words":[';
+        words.forEach(w => {
+          msg=msg+'"'+w+'",';
+        });*/
+        //xhttp.send(JSON.stringify({"words":words}));
+        //Envoie les informations du header adaptées avec la requête
+        xhttp.setRequestHeader(
+          "Content-Type",
+          "application/json"
+        );
+
+        xhttp.onreadystatechange = function () {
+          //Appelle une fonction au changement d'état.
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Requête finie, traitement ici.
+          }
+        };
+        xhttp.send(JSON.stringify({"words":words.toString()}));
+        console.log(JSON.stringify(words));
       }
 
       var sources = document.querySelectorAll(".source");
