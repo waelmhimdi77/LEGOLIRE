@@ -46,20 +46,17 @@
             <pre
               class="dlb2"
             ><code class="language-html">&lt;select class=&quot;select2&quot; multiple&gt;
-        &lt;option value=&quot;1&quot;&gt;Cheval&lt;/option&gt;
-        &lt;option value=&quot;2&quot;&gt;Vélo&lt;/option&gt;
-        &lt;option value=&quot;3&quot;&gt;Maison&lt;/option&gt;
-        &lt;option value=&quot;4&quot;&gt;Bateau&lt;/option&gt;
-        &lt;option value=&quot;5&quot;&gt;Chacal&lt;/option&gt;
-        &lt;option value=&quot;6&quot;&gt;Lune&lt;/option&gt;
-        &lt;option value=&quot;7&quot;&gt;Arbre&lt;/option&gt;
-        &lt;option value=&quot;8&quot;&gt;Livre&lt;/option&gt;
-        &lt;option value=&quot;9&quot;&gt;Cochon&lt;/option&gt;
-        &lt;option value=&quot;10&quot;&gt;Vache&lt;/option&gt;
-        &lt;option value=&quot;11&quot;&gt;Souris&lt;/option&gt;
-        &lt;option value=&quot;12&quot;&gt;Porte&lt;/option&gt;
-        &lt;option value=&quot;13&quot;&gt;Stylo&lt;/option&gt;
-        &lt;option value=&quot;14&quot;&gt;Mouton&lt;/option&gt;
+        &lt;option value=&quot;1&quot;&gt;cheval&lt;/option&gt;
+        &lt;option value=&quot;2&quot;&gt;bateau&lt;/option&gt;
+        &lt;option value=&quot;3&quot;&gt;vache&lt;/option&gt;
+        &lt;option value=&quot;4&quot;&gt;lune&lt;/option&gt;
+        &lt;option value=&quot;5&quot;&gt;arbre&lt;/option&gt;
+        &lt;option value=&quot;6&quot;&gt;livre&lt;/option&gt;
+        &lt;option value=&quot;7&quot;&gt;cochon&lt;/option&gt;  
+        &lt;option value=&quot;8&quot;&gt;souris&lt;/option&gt;
+        &lt;option value=&quot;9&quot;&gt;porte&lt;/option&gt;
+        &lt;option value=&quot;10&quot;&gt;stylo&lt;/option&gt;
+        &lt;option value=&quot;11&quot;&gt;mouton&lt;/option&gt;
     &lt;/select&gt;
     
     &lt;script&gt;
@@ -89,19 +86,16 @@
 
             <select class="select2" multiple>
               <option value="1">Cheval</option>
-              <option value="2">Vélo</option>
-              <option value="3">Maison</option>
-              <option value="4">Bateau</option>
-              <option value="5">Chacal</option>
-              <option value="6">Lune</option>
-              <option value="7">Arbre</option>
-              <option value="8">livre</option>
-              <option value="9">Cochon</option>
-              <option value="10">Vache</option>
-              <option value="11">Souris</option>
-              <option value="12">Porte</option>
-              <option value="13">Stylo</option>
-              <option value="14">Mouton</option>
+              <option value="2">Bateau</option>
+              <option value="3">Vache</option>
+              <option value="4">Lune</option>
+              <option value="5">Arbre</option>
+              <option value="6">livre</option>
+              <option value="7">Cochon</option>
+              <option value="8">Souris</option>
+              <option value="9">Porte</option>
+              <option value="10">Stylo</option>
+              <option value="11">Mouton</option>
             </select>
           </div>
 
@@ -109,6 +103,7 @@
             <button
               onclick="sendData()"
               class="
+                Click-here
                 w3-button
                 w3-margin
                 w3-center
@@ -122,6 +117,19 @@
             >
               LANCER L'EXERCICE
             </button>
+          </div>
+
+          <div class="custom-model-main">
+            <div class="custom-model-inner">
+              <div class="close-btn">×</div>
+              <div class="custom-model-wrap">
+                <div class="pop-up-content-wrap">
+                  <h2>Liste envoyée !</h2>
+                  <p>Votre liste de mots a bien été transmise pour l'exercice.</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-overlay"></div>
           </div>
         </section>
       </div>
@@ -181,7 +189,7 @@
 
     <!-- JavaScript Includes -->
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="jquery.scrollTo-1.4.2/jquery.scrollTo-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/prism.min.js"></script>
     <script src="script.js"></script>
@@ -201,11 +209,11 @@
         document.querySelector(".changed-element").innerHTML =
           event.addedElement.outerHTML;
         console.log(dlb2);
-        
+
         const w = document.querySelectorAll(".dual-listbox__item--selected");
         console.log(w);
-        
-        w.forEach(e => {
+
+        w.forEach((e) => {
           res2.push(e.innerHTML);
         });
         console.log(res2);
@@ -218,13 +226,21 @@
         console.log("élément sélectionné : ", res);*/
 
         // Les mots sélectionnés sont ajoutés à la liste
-        words=res2;
+        words = res2;
         //console.log("words :", words[0]);
       });
       dlb2.addEventListener("removed", function (event) {
         document.querySelector(".changed-element").innerHTML =
           event.removedElement.outerHTML;
         console.log(dlb2);
+      });
+
+      
+      $(".Click-here").on("click", function () {
+        $(".custom-model-main").addClass("model-open");
+      });
+      $(".close-btn, .bg-overlay").click(function () {
+        $(".custom-model-main").removeClass("model-open");
       });
 
       function sendData() {
@@ -236,10 +252,7 @@
         });*/
         //xhttp.send(JSON.stringify({"words":words}));
         //Envoie les informations du header adaptées avec la requête
-        xhttp.setRequestHeader(
-          "Content-Type",
-          "application/json"
-        );
+        xhttp.setRequestHeader("Content-Type", "application/json");
 
         xhttp.onreadystatechange = function () {
           //Appelle une fonction au changement d'état.
@@ -247,9 +260,10 @@
             // Requête finie, traitement ici.
           }
         };
-        xhttp.send(JSON.stringify({"words":words.toString()}));
+        xhttp.send(JSON.stringify({ words: words.toString() }));
         console.log(JSON.stringify(words));
       }
+
 
       var sources = document.querySelectorAll(".source");
       for (var i = 0; i < sources.length; i++) {
