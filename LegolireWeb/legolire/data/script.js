@@ -1,4 +1,4 @@
-// Create a "close" button and append it to each list item
+// Créez un bouton "fermer" et ajoutez-le à chaque élément de la liste.
 var myNodelist = document.getElementsByTagName("LI");
 var i;
 for (i = 0; i < myNodelist.length; i++) {
@@ -9,7 +9,7 @@ for (i = 0; i < myNodelist.length; i++) {
   myNodelist[i].appendChild(span);
 }
 
-// Click on a close button to hide the current list item
+// Cliquez sur un bouton de fermeture pour masquer l'élément de la liste en cours.
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
@@ -19,7 +19,7 @@ for (i = 0; i < close.length; i++) {
   };
 }
 
-// Add a "checked" symbol when clicking on a list item
+// Ajout d'un symbole "coché" lors d'un clic sur un élément de liste
 var list = document.querySelector("ul");
 list.addEventListener(
   "click",
@@ -31,7 +31,7 @@ list.addEventListener(
   false
 );
 
-// Create a new list item when clicking on the "Add" button
+// Créer un nouvel élément de liste en cliquant sur le bouton "Ajouter".
 function newElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("myInput").value;
@@ -59,10 +59,10 @@ function newElement() {
 }
 
 $(document).ready(function () {
-  /* This code is executed after the DOM has been completely loaded */
+  /* Ce code est exécuté après que le DOM ait été complètement chargé. */
 
   $("div a,footer a.up").click(function (e) {
-    // If a link has been clicked, scroll the page to the link's hash target:
+    // Si un lien a été cliqué, faites défiler la page jusqu'à la cible de hachage du lien :
 
     $.scrollTo(this.hash || 0, 1500);
     e.preventDefault();
@@ -106,18 +106,18 @@ setInterval(function getData() {
 })(window, function () {
   return /******/ (function (modules) {
     // webpackBootstrap
-    /******/ // The module cache
+    /******/ // Le cache du module
     /******/ var installedModules = {};
     /******/
-    /******/ // The require function
+    /******/ // La fonction requise
     /******/ function __webpack_require__(moduleId) {
       /******/
-      /******/ // Check if module is in cache
+      /******/ // Vérifier si le module est dans le cache
       /******/ if (installedModules[moduleId]) {
         /******/ return installedModules[moduleId].exports;
         /******/
       }
-      /******/ // Create a new module (and put it into the cache)
+      /******/ // Créer un nouveau module et le mettre dans le cache
       /******/ var module = (installedModules[moduleId] = {
         /******/ i: moduleId,
         /******/ l: false,
@@ -125,7 +125,7 @@ setInterval(function getData() {
         /******/
       });
       /******/
-      /******/ // Execute the module function
+      /******/ // Exécuter la fonction du module
       /******/ modules[moduleId].call(
         module.exports,
         module,
@@ -133,22 +133,22 @@ setInterval(function getData() {
         __webpack_require__
       );
       /******/
-      /******/ // Flag the module as loaded
+      /******/ // Marquer le module comme chargé
       /******/ module.l = true;
       /******/
-      /******/ // Return the exports of the module
+      /******/ // Retourne les exportations du module
       /******/ return module.exports;
       /******/
     }
     /******/
     /******/
-    /******/ // expose the modules object (__webpack_modules__)
+    /******/ // exposer l'objet modules (__webpack_modules__)
     /******/ __webpack_require__.m = modules;
     /******/
-    /******/ // expose the module cache
+    /******/ // exposer le cache du module
     /******/ __webpack_require__.c = installedModules;
     /******/
-    /******/ // define getter function for harmony exports
+    /******/ // définir la fonction getter pour les exportations d'harmonie
     /******/ __webpack_require__.d = function (exports, name, getter) {
       /******/ if (!__webpack_require__.o(exports, name)) {
         /******/ Object.defineProperty(exports, name, {
@@ -160,7 +160,7 @@ setInterval(function getData() {
       /******/
     };
     /******/
-    /******/ // define __esModule on exports
+    /******/ // définir __esModule sur les exportations
     /******/ __webpack_require__.r = function (exports) {
       /******/ if (typeof Symbol !== "undefined" && Symbol.toStringTag) {
         /******/ Object.defineProperty(exports, Symbol.toStringTag, {
@@ -172,11 +172,11 @@ setInterval(function getData() {
       /******/
     };
     /******/
-    /******/ // create a fake namespace object
-    /******/ // mode & 1: value is a module id, require it
-    /******/ // mode & 2: merge all properties of value into the ns
-    /******/ // mode & 4: return value when already ns object
-    /******/ // mode & 8|1: behave like require
+    /******/ // créer un faux objet d'espace de nom
+    /******/ // mode & 1: la valeur est un identifiant de module, exigez-le
+    /******/ // mode & 2: fusionner toutes les propriétés de valeur dans le ns
+    /******/ // mode & 4: valeur de retour si l'objet est déjà ns
+    /******/ // mode & 8|1: se comportent comme des exigences
     /******/ __webpack_require__.t = function (value, mode) {
       /******/ if (mode & 1) value = __webpack_require__(value);
       /******/ if (mode & 8) return value;
@@ -206,7 +206,7 @@ setInterval(function getData() {
       /******/
     };
     /******/
-    /******/ // getDefaultExport function for compatibility with non-harmony modules
+    /******/ // fonction getDefaultExport pour la compatibilité avec les modules non-harmony
     /******/ __webpack_require__.n = function (module) {
       /******/ var getter =
         module && module.__esModule
@@ -230,7 +230,7 @@ setInterval(function getData() {
     /******/ __webpack_require__.p = "";
     /******/
     /******/
-    /******/ // Load entry module and return exports
+    /******/ // Module d'entrée de charge et exportations de retour
     /******/ return __webpack_require__(
       (__webpack_require__.s = "./src/dual-listbox.js")
     );
@@ -242,11 +242,11 @@ setInterval(function getData() {
         /*!*****************************!*\
   !*** ./src/dual-listbox.js ***!
   \*****************************/
-        /*! exports provided: default, DualListbox */
+        /*! exportations fournies : default, DualListbox */
         /***/ function (module, __webpack_exports__, __webpack_require__) {
           "use strict";
           __webpack_require__.r(__webpack_exports__);
-          /* harmony export (binding) */ __webpack_require__.d(
+          /* exportation de l'harmonie (reliure) */ __webpack_require__.d(
             __webpack_exports__,
             "DualListbox",
             function () {
@@ -841,7 +841,7 @@ setInterval(function getData() {
 
             return DualListbox;
           })();
-          /* harmony default export */ __webpack_exports__["default"] =
+          /* exportation de l'harmonie */ __webpack_exports__["default"] =
             DualListbox;
 
           /***/

@@ -25,7 +25,7 @@ html {
   details,
   figcaption,
   figure,
-  /* Style the header with a grey background and some padding */
+  /* Donnez un style à l'en-tête en le dotant d'un arrière-plan gris et d'un peu de rembourrage. */
   .header {
     overflow: hidden;
     background-color: #f1f1f1;
@@ -33,7 +33,7 @@ html {
     width: 100%;
   }
   
-  /* Style the header links */
+  /* Donnez un style aux liens de l'en-tête */
   .header a {
     float: left;
     color: black;
@@ -45,30 +45,30 @@ html {
     border-radius: 4px;
   }
   
-  /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+  /* Donnez un style au lien du logo (remarquez que nous avons défini la même valeur pour la hauteur de ligne et la taille de la police afin d'éviter que l'en-tête n'augmente lorsque la police s'agrandit). */
   .header a.logo {
     font-size: 12px;
     font-weight: bold;
   }
   
-  /* Change the background color on mouse-over */
+  /* Changez la couleur de l'arrière-plan au passage de la souris */
   .header a:hover {
     background-color: #ddd;
     color: black;
   }
   
-  /* Style the active/current link*/
+  /* Style du lien actif/actuel*/
   .header a.active {
     background-color: dodgerblue;
     color: white;
   }
   
-  /* Float the link section to the right */
+  /* Déplacer la section des liens vers la droite */
   .header-right {
     float: right;
   }
   
-  /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+  /* Ajoutez des requêtes médias pour la réactivité - lorsque l'écran a une largeur de 500px ou moins, empilez les liens les uns sur les autres. */
   @media screen and (max-width: 500px) {
     .header a {
       float: none;
@@ -87,12 +87,12 @@ html {
     width: 100%;
   }
   
-  /* Container holding the image and the text */
+  /* Conteneur contenant l'image et le texte */
   .container {
     position: relative;
   }
   
-  /* Bottom right text */
+  /* Texte en bas à droite */
   .text-block {
     position: absolute;
     bottom: 20px;
@@ -109,18 +109,18 @@ html {
     font-family: Arial, Helvetica, sans-serif;
   }
   
-  /* Include the padding and border in an element's total width and height */
+  /* Inclure le padding et la bordure dans la largeur et la hauteur totales d'un élément */
   * {
     box-sizing: border-box;
   }
   
-  /* Remove margins and padding from the list */
+  /* Supprimer les marges et le rembourrage de la liste */
   ol {
     margin: 28px;
     padding: 28px;
   }
   
-  /* Style the list items */
+  /* Style des éléments de la liste */
   ol li {
     cursor: pointer;
     position: relative;
@@ -129,31 +129,31 @@ html {
     font-size: 25px;
     transition: 0.2s;
   
-    /* make the list items unselectable */
+    /* rendre les éléments de la liste non sélectionnables */
     -webkit-user-select: button;
     -moz-user-select: button;
     -ms-user-select: button;
     user-select: button;
   }
   
-  /* Set all odd list items to a different color (zebra-stripes) */
+  /* Donner une couleur différente à tous les éléments de la liste impaire (rayures zébrées). */
   ol li:nth-child(odd) {
     background: #f9f9f9;
   }
   
-  /* Darker background-color on hover */
+  /* Couleur de fond plus foncée au survol */
   ol li:hover {
     background: #ddd;
   }
   
-  /* When clicked on, add a background color and strike out text */
+  /* Lorsque vous cliquez dessus, ajoutez une couleur d'arrière-plan et rayez le texte. */
   ol li.checked {
     background: #888;
     color: #fff;
     text-decoration: line-through;
   }
   
-  /* Add a "checked" mark when clicked on */
+  /* Ajouter une marque "cochée" lorsqu'on clique dessus */
   ol li.checked::before {
     content: '';
     position: absolute;
@@ -167,7 +167,7 @@ html {
     width: 7px;
   }
   
-  /* Style the close button */
+  /* Style le bouton de fermeture */
   .close {
     position: absolute;
     right: 0;
@@ -180,7 +180,7 @@ html {
     color: white;
   }
   
-  /* Style the header */
+  /* Styliser l'en-tête */
   .mylist {
     margin-top: 160px;
     background-color: #f44336;
@@ -189,14 +189,14 @@ html {
     text-align: center;
   }
   
-  /* Clear floats after the header */
+  /* Effacer les flottants après l'en-tête */
   .mylist:after {
     content: "";
     display: table;
     clear: both;
   }
   
-  /* Style the input */
+  /* Style de l'entrée */
   input {
     margin: 0;
     border: none;
@@ -207,7 +207,7 @@ html {
     font-size: 16px;
   }
   
-  /* Style the "Add" button */
+  /* Style le bouton "Ajouter */
   .addBtn {
     padding: 10px;
     width: 25%;
